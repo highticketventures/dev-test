@@ -1,5 +1,4 @@
 import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default function HomePage() {
@@ -16,24 +15,20 @@ export default function HomePage() {
           
           <SignedOut>
             <SignInButton mode="modal">
-              <Button size="lg" className="text-lg px-8 py-4">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg text-lg">
                 Get Started
-              </Button>
+              </button>
             </SignInButton>
           </SignedOut>
           
           <SignedIn>
             <div className="space-x-4">
-              <Button asChild size="lg">
-                <Link href="/dashboard">
-                  Go to Dashboard
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/admin">
-                  Admin Panel
-                </Link>
-              </Button>
+              <Link href="/dashboard" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg">
+                Go to Dashboard
+              </Link>
+              <Link href="/admin" className="border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium py-3 px-8 rounded-lg">
+                Admin Panel
+              </Link>
             </div>
           </SignedIn>
         </div>
