@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ====================
+// MULTI-TENANT MODELS
+// ====================
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Company metadata
+  revenue    Int?     // Revenue in cents
+  industry   String?
+  website    String?
+  logoUrl    String?
+  
+  // Relations
+  users     User[]
+  requests  Request[]
+
+  @@map("companies")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Multi-tenant relationship
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  // User role within the company
+  role      UserRole @default(MEMBER)
+  
+  // Relations
+  requests  Request[]
+
+  @@map("users")
+}
+
+model Request {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  category    String
+  priority    Priority   @default(MEDIUM)
+  status      Status     @default(PENDING)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Multi-tenant fields
+  companyId   String
+  company     Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Linear integration
+  linearId    String?    @unique // Linear issue ID
+  linearUrl   String?    // Direct link to Linear issue
+  
+  // Relations
+  comments    Comment[]
+
+  @@map("requests")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  requestId String
+  request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  // Author info (can be internal staff)
+  authorId    String?
+  authorName  String
+  authorEmail String?
+  isInternal  Boolean @default(false) // True for HTV staff responses
+
+  @@map("comments")
+}
+
+// ====================
+// ENUMS
+// ====================
+
+enum UserRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  BLOCKED
+  COMPLETED
+  CANCELLED
+}

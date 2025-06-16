@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: htv-postgres
+    environment:
+      POSTGRES_DB: htv_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for sessions/caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: htv-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Next.js Application (development)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: htv-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/htv_test
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+  # Mailpit for local email testing
+  mailpit:
+    image: axllent/mailpit
+    container_name: htv-mailpit
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    volumes:
+      - mailpit_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
+  mailpit_data:
