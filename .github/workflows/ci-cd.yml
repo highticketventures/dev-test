@@ -44,13 +44,16 @@ jobs:
       - name: Setup test environment
         run: |
           cp .env.example .env
-          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/htv_test" >> .env
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/htv_test
 
       - name: Generate Prisma client
         run: npx prisma generate
 
       - name: Run database migrations
         run: npx prisma db push
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/htv_test
 
       - name: Run linting
         run: npm run lint
