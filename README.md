@@ -95,3 +95,7 @@ Your 3-5 minute video should cover:
 - **Real-time features** - demonstrate webhook → UI updates
 - **Key challenges** - what was difficult and how you solved it
 - **Code quality highlights** - show examples of clean patterns you used
+
+## Design Reference
+
+- 🔗 [Figma Mockups – HTV Request Hub](https://www.figma.com/design/BJz4QGPXRUXk1t8LG70hKH/HTV-OS---Test?node-id=2279-2473&t=yMzn6hBJ3zkJMmod-1)
