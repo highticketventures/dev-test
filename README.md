@@ -120,12 +120,12 @@ These tools mirror what we are looking to use in production:
 
 Your Loom recording should include:
 
-- Architecture decisions and folder structure
-- How multi-tenancy is implemented + data isolation
-- Real-time functionality demo (status update triggering UI change)
-- Code examples that show clean, scalable patterns
-- Any tradeoffs or challenges and how you approached them
-- Anything that was not required but you thought was important
+- How you structured the project (folder layout, key modules)
+- How you implemented multi-tenancy and enforced isolation
+- How your real-time updates are wired
+- One or two code decisions you made that could scale well long-term (e.g. extensible models, clean abstractions)
+- Any tradeoffs, shortcuts, or areas where you’d improve given more time
+- Anything you added that wasn’t required but felt important to build “the right way”
 
 This is your chance to walk us through how you think and build.
 
