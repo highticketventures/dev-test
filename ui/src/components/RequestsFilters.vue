@@ -53,9 +53,7 @@
                     <SelectContent>
                         <SelectItem value="all">All</SelectItem>
                         <SelectItem value="pending">John Doe</SelectItem>
-                        <SelectItem value="in-progress">Jane Doe</SelectItem>
                         <SelectItem value="reviewing">John Smith</SelectItem>
-                        <SelectItem value="completed">Jane Smith</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
