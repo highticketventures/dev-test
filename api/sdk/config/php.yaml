@@ -1,0 +1,9 @@
+'!include': '../common.yaml'
+outputDir: /app/sdk/dist/php
+generatorName: php
+additionalProperties:
+  modelPackage: ExpressAPITemplate
+  packageName: ExpressAPITemplate
+  apiPackage: ExpressAPITemplate
+  composerPackageName: ExpressAPITemplate
+  invokerPackage: ExpressAPITemplate

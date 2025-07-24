@@ -1,0 +1,24 @@
+services:
+  htv-api:
+    build: .
+    entrypoint: "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
+    container_name: htv-api
+    volumes:
+      - ./:/app
+      - ./.vol/tmp:/tmp
+    links:
+      - htv-api-db
+    ports:
+      - "8888:80"
+
+  htv-api-db:
+    image: postgres:17
+    container_name: htv-api-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.vol/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_DATABASE
+      POSTGRES_USER: $DB_USERNAME

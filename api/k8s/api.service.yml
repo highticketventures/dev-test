@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: htv-api
+  namespace: htv-api
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "htv-api.anthonybudd.io"
+    service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+    service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  - port: 443
+    targetPort: 80
+    name: https
+  selector:
+    app: htv-api
