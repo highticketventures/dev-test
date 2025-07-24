@@ -1,0 +1,33 @@
+services:
+  htv-api:
+    build: .
+    entrypoint: "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
+    container_name: htv-api
+    depends_on:
+      htv-api-db:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+      - ./.vol/tmp:/tmp
+    links:
+      - htv-api-db
+    ports:
+      - "8888:80"
+
+  htv-api-db:
+    image: mysql:oracle
+    container_name: htv-api-db
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.vol/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
