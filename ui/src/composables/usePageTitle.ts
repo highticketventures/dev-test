@@ -9,7 +9,7 @@ export function usePageTitle() {
         document.title = typeof pageTitle === 'string' ? pageTitle : 'HTV';
     };
 
-    watch(() => route.meta.title, (newTitle) => updateTitle(), { immediate: true });
+    watch(() => route.meta.title, (_) => updateTitle(), { immediate: true });
 
     return {
         updateTitle
