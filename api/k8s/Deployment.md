@@ -5,7 +5,7 @@
 Create a namespace
 
 ```sh
-kubectl --kubeconfig=./kubeconfig.yml create namespace htv-api`
+kubectl create namespace htv-api`
 ```
 
 
@@ -13,7 +13,7 @@ kubectl --kubeconfig=./kubeconfig.yml create namespace htv-api`
 ```sh
 openssl genrsa -out private.pem 2048
 openssl rsa -in private.pem -outform PEM -pubout -out public.pem
-kubectl --kubeconfig=./kubeconfig.yml --namespace=htv-api create secret generic htv-api-jwt-secret \
+kubectl --namespace=htv-api create secret generic htv-api-jwt-secret \
     --from-file=./private.pem \
     --from-file=./public.pem
 rm ./private.pem ./public.pem 
@@ -47,7 +47,7 @@ kubectl --kubeconfig=./kubeconfig.yml apply -f ./k8s/api.service.yml
 
 ### Deploy
 ```sh
-docker buildx build --platform linux/amd64 --push -t registry.digitalocean.com/htv-api/app:latest . && 
+docker buildx build --platform linux/amd64 --push -t registry.digitalocean.com/mycc/ab-test:latest . && 
 kubectl --kubeconfig=./kubeconfig.yml rollout restart deployment htv-api && \
 kubectl --kubeconfig=./kubeconfig.yml get pods -w
 ```
@@ -65,17 +65,17 @@ kubectl --kubeconfig=./kubeconfig.yml --namespace=htv-api exec -ti $POD -- /bin/
 DigitalOcean tutorial: [https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes)
 
 ```sh
-kubectl --kubeconfig=./kubeconfig.yml apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/do/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.13.0/deploy/static/provider/do/deploy.yaml
 
-kubectl --kubeconfig=./kubeconfig.yml get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
+kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
 
-kubectl --kubeconfig=./kubeconfig.yml apply -f ./k8s/api.ingress.yml
+kubectl apply -f ./k8s/api.ingress.yml
 
-kubectl --kubeconfig=./kubeconfig.yml apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.18.2/cert-manager.yaml
 
-kubectl --kubeconfig=./kubeconfig.yml get pods --namespace cert-manager
+kubectl get pods --namespace cert-manager
 
-kubectl --kubeconfig=./kubeconfig.yml create -f k8s/prod-issuer.yml
+kubectl create -f k8s/prod-issuer.yml
 ```
 
 ### Useful K8S commands

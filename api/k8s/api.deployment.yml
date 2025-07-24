@@ -19,7 +19,7 @@ spec:
             secretName: htv-api-jwt-secret
       containers:
         - name: htv-api
-          image: registry.EXAMPLE.COM/htv-api/htv-api
+          image: registry.digitalocean.com/mycc/ab-test:latest
           lifecycle:
             postStart:
               exec:
@@ -37,9 +37,9 @@ spec:
           - name: NODE_ENV
             value: "production"
           - name: FRONTEND_URL
-            value: "https://app.EXAMPLE.COM"
+            value: "https://htv.anthonybudd.io"
           - name: BACKEND_URL
-            value: "https://api.EXAMPLE.COM/api/v1"
+            value: "https://htv-api.anthonybudd.io/api/v1"
           - name: PORT
             value: "80"
           - name: PRIVATE_KEY_PATH
@@ -47,13 +47,13 @@ spec:
           - name: PUBLIC_KEY_PATH
             value: "/app/public.pem"
           - name: DB_HOST
-            value: "db.EXAMPLE.COM"
+            value: "ab-api-db-postgresql-nyc3-50393-do-user-23204408-0.f.db.ondigitalocean.com"
           - name: DB_PORT
-            value: "3306"
+            value: "25060"
           - name: DB_USERNAME
-            value: "user"
+            value: "doadmin"
           - name: DB_DATABASE
-            value: "app"
+            value: "defaultdb"
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:

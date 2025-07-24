@@ -14,83 +14,36 @@
                     <p class="block sm:hidden">Rapidly pinpoint bottlenecks, schedule advisory sessions, and drive improvements.</p>
                 </div>
                 <div class="flex flex-col gap-2 hidden lg:flex">
-                    <div class="flex flex-row-reverse gap-2">
+
+
+                    <div
+                        v-for="(row, i) in expertise"
+                        :key="i"
+                        class="flex flex-row-reverse gap-2"
+                    >
                         <button
-                            v-for="expertise in expertiseRow1"
+                            v-for="expertise in row"
                             :key="expertise.name"
-                            class="inline-flex items-center gap-1.5 px-2 py-1 bg-white/[0.03] backdrop-blur-md border border-white/[0.04] rounded-[37px] text-white text-xs font-medium whitespace-nowrap transition-all hover:bg-white/[0.06] hover:border-white/[0.08] cursor-pointer"
+                            class="bg-white/[0.03] border border-white/[0.04] inline-flex items-center gap-1.5 px-2 py-1 rounded-[37px] text-xs text-white font-medium whitespace-nowrap backdrop-blur-md transition-all hover:bg-white/[0.06] hover:border-white/[0.08] cursor-pointer"
                         >
                             <span
                                 v-if="expertise.logo"
                                 class="w-3 h-3 flex items-center justify-center"
                             >
+                                <!-- AB: This is a hack to get the logo to work -->
                                 <img
                                     alt="Google Ads"
                                     loading="lazy"
                                     width="12"
                                     height="12"
                                     decoding="async"
-                                    data-nimg="1"
-                                    class=""
-                                    style="color:transparent"
-                                    :src="`/src/assets/requests/${expertise.logo}`"
+                                    :src="`/requests/${expertise.logo}`"
                                 >
                             </span>
                             <span>{{ expertise.name }}</span>
                         </button>
                     </div>
 
-                    <div class="flex flex-row-reverse gap-2">
-                        <button
-                            v-for="expertise in expertiseRow2"
-                            :key="expertise.name"
-                            class="inline-flex items-center gap-1.5 px-2 py-1 bg-white/[0.03] backdrop-blur-md border border-white/[0.04] rounded-[37px] text-white text-xs font-medium whitespace-nowrap transition-all hover:bg-white/[0.06] hover:border-white/[0.08] cursor-pointer"
-                        >
-                            <span
-                                v-if="expertise.logo"
-                                class="w-3 h-3 flex items-center justify-center"
-                            >
-                                <img
-                                    alt="Google Ads"
-                                    loading="lazy"
-                                    width="12"
-                                    height="12"
-                                    decoding="async"
-                                    data-nimg="1"
-                                    class=""
-                                    style="color:transparent"
-                                    :src="`/src/assets/requests/${expertise.logo}`"
-                                >
-                            </span>
-                            <span>{{ expertise.name }}</span>
-                        </button>
-                    </div>
-
-                    <div class="flex flex-row-reverse gap-2">
-                        <button
-                            v-for="expertise in expertiseRow3"
-                            :key="expertise.name"
-                            class="inline-flex items-center gap-1.5 px-2 py-1 bg-white/[0.03] backdrop-blur-md border border-white/[0.04] rounded-[37px] text-white text-xs font-medium whitespace-nowrap transition-all hover:bg-white/[0.06] hover:border-white/[0.08] cursor-pointer"
-                        >
-                            <span
-                                v-if="expertise.logo"
-                                class="w-3 h-3 flex items-center justify-center"
-                            >
-                                <img
-                                    alt="Google Ads"
-                                    loading="lazy"
-                                    width="12"
-                                    height="12"
-                                    decoding="async"
-                                    data-nimg="1"
-                                    class=""
-                                    style="color:transparent"
-                                    :src="`/src/assets/requests/${expertise.logo}`"
-                                >
-                            </span>
-                            <span>{{ expertise.name }}</span>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -98,25 +51,26 @@
 </template>
 
 <script setup lang="ts">
-const expertiseRow1 = [
-    { name: 'Product' },
-    { name: 'Sales', logo: 'sales.svg' },
-    { name: 'Facebook Ads', logo: 'facebook-ads.svg' },
-    { name: 'Hubspot', logo: 'hubspot.svg' },
-    { name: 'Google Ads', logo: 'google-ads.svg' },
-];
-const expertiseRow2 = [
-    { name: 'Engineering', logo: 'github.svg' },
-    { name: 'Talent', logo: 'linkedin.svg' },
-    { name: 'Design', logo: 'figma.svg' },
-    { name: 'Legal', logo: 'legal.svg' },
-    { name: 'Finance', logo: 'stripe.svg' },
-];
-const expertiseRow3 = [
-    { name: 'Operations' },
-    { name: 'Management', logo: 'slack.svg' },
-    { name: 'Fulfillment' },
-    { name: 'Webflow', logo: 'webflow.svg' },
+
+const expertise = [
+    [
+        { name: 'Product' },
+        { name: 'Sales', logo: 'sales.svg' },
+        { name: 'Facebook Ads', logo: 'facebook-ads.svg' },
+        { name: 'Hubspot', logo: 'hubspot.svg' },
+        { name: 'Google Ads', logo: 'google-ads.svg' },
+    ], [
+        { name: 'Engineering', logo: 'github.svg' },
+        { name: 'Talent', logo: 'linkedin.svg' },
+        { name: 'Design', logo: 'figma.svg' },
+        { name: 'Legal', logo: 'legal.svg' },
+        { name: 'Finance', logo: 'stripe.svg' },
+    ], [
+        { name: 'Operations' },
+        { name: 'Management', logo: 'slack.svg' },
+        { name: 'Fulfillment' },
+        { name: 'Webflow', logo: 'webflow.svg' },
+    ]
 ];
 </script>
 

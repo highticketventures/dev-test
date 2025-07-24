@@ -3,9 +3,6 @@ services:
     build: .
     entrypoint: "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
     container_name: htv-api
-    depends_on:
-      htv-api-db:
-        condition: service_healthy
     volumes:
       - ./:/app
       - ./.vol/tmp:/tmp
@@ -15,19 +12,13 @@ services:
       - "8888:80"
 
   htv-api-db:
-    image: mysql:oracle
+    image: postgres:17
     container_name: htv-api-db
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -prootpass"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - ./.vol/mysql:/var/lib/mysql
+      - ./.vol/postgres:/var/lib/postgresql/data
     environment:
-      MYSQL_ROOT_PASSWORD: supersecret
-      MYSQL_DATABASE: $DB_DATABASE
-      MYSQL_USER: $DB_USERNAME
-      MYSQL_PASSWORD: $DB_PASSWORD
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_DATABASE
+      POSTGRES_USER: $DB_USERNAME
