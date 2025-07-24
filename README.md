@@ -1,4 +1,32 @@
-# So You Want to Be Our ***Founding Engineer***?
+# Application
+
+Unfortunately I have a  serious family emergency and will have to travel to Florida this weekend so I will not be available to complete this task. I have worked on this from 9am Wed 23rd to 4pm Thur 24th, my submission represents about 15 hours of work.
+
+Link: https://htv.anthonybudd.io/
+Loom: https://www.loom.com/share/52bad6e058604feeb4706286ab0b297c
+
+## Tech Stack
+
+- **Backend** Express.ts + Sequelize + PostgreSQL
+- **Frontend:** Vue3 + TailwindCSS + shadcn/ui
+- **Deployment:** Kubernetes
+- ~~**Auth:** Clerk (with org support)~~ Skipped due to time
+- ~~**Real-time:** Pusher or Ably~~ Skipped due to time
+- ~~**Integration:** Linear API~~ Skipped due to time
+
+
+I deviated heavily from the proposed tech stack. I do not like Next.js, React or TSX/JSX, because of this I have attempted to complete this using the Tech Stack I think is best. I understand this may work against me in this interview process, but I have been building web technology for over a decade and I am confident that the stack I have chosen is the correct one for HTV.
+
+I prefer to take a more traditionalist approach and decouple the front-end and back-end into two separate repos. The backend contains the server-side business logic, models and migrations while the frontend repo contains all of the client side UI. While vibe-coding a next.js project and one-click deploying it to vercel is how all of the cool tech influencers are deploying apps, I belive my approach is still the correct method for building highly scalable multi-million dollar start-ups.
+
+
+
+
+
+
+---- 
+
+# So You Want to Be Our ***Founding Engineer***? - "Yes"
 
 If you’re reading this, it means your application *impressed us* and now we want to see what you can build.
 
